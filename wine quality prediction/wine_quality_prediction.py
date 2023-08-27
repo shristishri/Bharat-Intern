@@ -1,15 +1,11 @@
-#this is a program to predict the quality of wine
-#this program is made by Shristi Shrivastava
-#first we will import libraries
-
-import numpy as np
+ np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings('ignore')
 #now we are importing the dataframe
-df = pd.read_csv('winequality.csv')
+df = pd.read_csv('C:\\Users\\akash\\Downloads\\internship\\ml\\wine quality prediction\\winequality.csv')
 print('This is our training database')
 print('--------------------------------------------------------------\n')
 
@@ -17,23 +13,11 @@ print(df.describe().T)
 print('--------------------------------------------------------------')
 df.nunique()
 df.duplicated().sum()
-sns.set(style="whitegrid")
-print(df['quality'].value_counts())
-print('--------------------------------------------------------------')
-fig = plt.figure(figsize = (10,6))
-sns.countplot('quality', data=df, palette='pastel')
-import warnings
-warnings.filterwarnings("ignore")
 
 sns.set(style="whitegrid")
-fig, ax1 = plt.subplots(3,4, figsize=(24,30))
-k = 0
-columns = list(df.columns)
-for i in range(3):
-    for j in range(4):
-            sns.boxplot(df['quality'], df[columns[k]], ax = ax1[i][j], palette='pastel')
-            k += 1
-plt.show()
+print(df['quality'].value_counts())
+fig = plt.figure(figsize = (10,6))
+
 plt.figure(figsize = (15,15))
 sns.heatmap(df.corr(),annot=True, cmap= 'PuBuGn')
 color = sns.color_palette("pastel")
@@ -110,26 +94,26 @@ print('--------------------------------------------------------------')
 selected_features = ['fixed acidity', 'volatile acidity', 'citric acid', 'chlorides',
                      'free sulfur dioxide', 'total sulfur dioxide', 'density', 'pH',
                      'sulphates', 'alcohol']
-X = Balanced_df[selected_features]
+x = Balanced_df[selected_features]
 y = Balanced_df.quality
 from sklearn.model_selection import train_test_split
 
 # Splitting the data into 70% and 30% to construct Training and Testing Data respectively.
-X_train,X_test,y_train,y_test = train_test_split(X, y, test_size=0.3,random_state=13)
+x_train,x_test,y_train,y_test = train_test_split(x, y, test_size=0.3,random_state=13)
 from sklearn.neighbors import KNeighborsClassifier  
 # For weights = 'uniform'
 for n_neighbors in [5,10,15,20]:
     model = KNeighborsClassifier(n_neighbors)
-    model.fit(X_train, y_train) 
-    scr = model.score(X_test, y_test)
+    model.fit(x_train, y_train) 
+    scr = model.score(x_test, y_test)
     print("For n_neighbors = ", n_neighbors  ," score is ",scr)
 print('--------------------------------------------------------------')
 
 # For weights = 'distance'
 for n_neighbors in [5,10,15,20]:
     model = KNeighborsClassifier(n_neighbors, weights='distance')
-    model.fit(X_train, y_train) 
-    scr = model.score(X_test, y_test)
+    model.fit(x_train, y_train) 
+    scr = model.score(x_test, y_test)
     print("For n_neighbors = ", n_neighbors  ," score is ",scr)
 print('--------------------------------------------------------------')
 
@@ -137,10 +121,10 @@ print('--------------------------------------------------------------')
 KNN = KNeighborsClassifier(n_neighbors=5, weights='distance')
 
 # Train the model using the training set
-KNN.fit(X_train, y_train) 
-results = KNN.fit(X_train, y_train)
-train_predictions = KNN.predict(X_train)
-test_predictions = KNN.predict(X_test)
+KNN.fit(x_train, y_train) 
+results = KNN.fit(x_train, y_train)
+train_predictions = KNN.predict(x_train)
+test_predictions = KNN.predict(x_test)
 from sklearn.metrics import classification_report, confusion_matrix
 
 print("\n Train Data: KNN_Confusion Matrix:\n ")
